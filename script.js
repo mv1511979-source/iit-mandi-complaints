@@ -72,18 +72,21 @@ function sendData(base64, filename) {
   const btn = form.querySelector('button');
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
-  
+
+  // ✅ ONLY DATE (YYYY-MM-DD)
+  const today = new Date();
+  data.date = today.toISOString().split('T')[0];
+
   data.image = base64;
   data.filename = filename;
 
   fetch(scriptURL, { 
-    method: 'POST', 
-    mode: 'no-cors', // <--- ADD THIS LINE TO FIX THE FREEZE
+    method: 'POST',
+    mode: 'no-cors',
     cache: 'no-cache',
-    body: JSON.stringify(data) 
+    body: JSON.stringify(data)
   })
   .then(() => {
-    // Because of 'no-cors', this will trigger as soon as data is sent
     alert("Success! Your complaint has been recorded.");
     btn.innerText = "Submit";
     btn.disabled = false;
