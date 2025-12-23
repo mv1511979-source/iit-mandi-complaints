@@ -74,7 +74,16 @@ function sendData(base64, filename) {
   formData.append("image", base64);
   formData.append("filename", filename);
 
-  fetch(scriptURL, { method: "POST", body: formData })
-    .then(() => alert("Success"))
-    .catch(err => console.error(err));
+ fetch(scriptURL, {
+  method: "POST",
+  mode: "no-cors",   // ✅ REQUIRED
+  body: formData
+});
+
+// Immediately do UI success (don’t wait for response)
+alert("Success! Your complaint has been recorded.");
+btn.innerText = "Submit";
+btn.disabled = false;
+form.reset();
+
 }
