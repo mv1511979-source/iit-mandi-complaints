@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => showSection(m1, a1));
 
 // ... (keep your tab navigation code at the top) ...
 
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwhT5yAvX5EEpGL3hGZqX9dj3TqqatdZt5f72rUZvamzViJmYAZeRGWeWfBSdGyHQuV/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxmtCb8_oZ8mQEFG3wuQJ5-0FqEcpjG3uSBledAMyBFckmkK-5EEnyZ-go1WLLk91Rr/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
