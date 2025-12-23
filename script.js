@@ -69,22 +69,29 @@ form.addEventListener('submit', e => {
 });
 
 function sendData(base64, filename) {
+  const btn = form.querySelector('button');
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
   
-  // Attach the actual image data
   data.image = base64;
   data.filename = filename;
 
   fetch(scriptURL, { 
     method: 'POST', 
-    mode: 'no-cors', 
+    mode: 'no-cors', // <--- This prevents the "Sending..." freeze
+    cache: 'no-cache',
     body: JSON.stringify(data) 
   })
   .then(() => {
-    alert("Success! Complaint and image registered.");
+    alert("Success! Complaint registered.");
     btn.innerText = "Submit";
     btn.disabled = false;
     form.reset();
+    window.location.reload(); // Returns user to the 'About' page
+  })
+  .catch(error => {
+    alert("Error! Check your connection.");
+    btn.innerText = "Submit";
+    btn.disabled = false;
   });
 }
