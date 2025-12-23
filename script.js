@@ -35,8 +35,8 @@ a3.addEventListener("click",()=>
 document.addEventListener("DOMContentLoaded",()=>
 {
     m3.style.display="none";
-   m1.style.display="none";
-   m2.style.display="flex";
+   m2.style.display="none";
+   m1.style.display="flex";
    a1.classList.add("active");
    a2.classList.remove("active");
    a3.classList.remove("active");
