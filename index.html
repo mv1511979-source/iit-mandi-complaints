@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div id="title">
+            <h1 id="heading">Campus Complaint System</h1>
+            <p>Improving Mess & Hostel Life</p>
+        </div>
+        <div id="navigation">
+            <a href="#" id="a1">About</a>
+             <a href="#" id="a2">Submit Complaint</a>
+              <a href="#" id="a3">Contact</a>
+        </div>
+        <main id="m1">
+            <div class="card">
+                <div class="card-header"><h2>About This Project</h2></div>
+                <div class="card-body">
+                    <p>This system is designed to provide students with a transparent and efficient way to report issues regarding mess food and hostel maintenance. By digitizing the process, we ensure that every complaint is tracked and resolved timely.</p>
+                    <p id="t1"><strong>Tech Stack:</strong> HTML, CSS, JavaScript, and Google Apps Script.</p>
+                </div>
+            </div>
+            
+        </main>
+        <main id="m2" >
+            <div id="mid">
+                <div id="s">
+                    <h3>Submit Your Complaint</h3>
+                </div>
+                <div id="form">
+                    <div id="purple"></div>
+                    <div id="formheading">
+                        <p>Student Complaint Form</p>
+                    </div>
+                </div>
+                <div id="form2">
+                    <form>
+    <label id="l1">Name</label>
+    <input type="text" name="Name" class="searchbar" placeholder="Your answer" required>
+    
+    <br><label>Roll No</label>
+    <input type="text" name="Roll No" class="searchbar" placeholder="Your answer" required>
+    
+    <br>
+    <label>Issue type</label>
+    <select name="Issue" class="dropdown" required>
+        <option value="" disabled selected>Select</option>
+        <option value="Mess">Mess</option>
+        <option value="Hostel">Hostel</option>
+    </select>
+
+    <label>Category</label>
+    <select name="Category" class="dropdown">
+        <option value="" disabled selected>Select</option>
+        <option value="Food Quality">Food Quality</option>
+        <option value="Hygiene">Hygiene</option>
+        <option value="Electricity">Electricity</option>
+        <option value="Water Supply">Water Supply</option>
+        <option value="Other">Other</option>
+    </select>
+
+    <label>Describe the issue:</label>
+    <textarea name="Description" class="searchbar" id="search" placeholder="Enter your complaint here" rows="5"></textarea>
+
+    <label>Date</label>
+    <input type="date" name="Date" class="searchbar">
+
+    <button type="submit">Submit</button>
+</form>
+                </div>
+            </div>
+        </main>
+        <main id="m3">
+            <div class="card">
+                <div class="card-header"><h2>Contact Us</h2></div>
+                <div class="card-body">
+                    <p>For urgent hostel or mess issues, please contact the authorities:</p>
+                    <ul>
+    <li ><strong >Chief Warden:</strong> <a href="mailto:chiefwarden@iitmandi.ac.in">chiefwarden@iitmandi.ac.in</a></li>
+    <li><strong>Mess Manager:</strong> <a href="mailto:mess-help@iitmandi.ac.in">mess-help@iitmandi.ac.in</a></li>
+    
+</ul>
+                </div>
+            </div>
+        </main>
+    </header>
+    <footer>
+        <p>GDG Fresher's TechSprint | Team Project</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
