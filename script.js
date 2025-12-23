@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded",()=>
    a2.classList.remove("active");
    a3.classList.remove("active");
 })
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyEIMkILa6qQwM3YMURNwFtWDQ5dhPKIGU3Gt4Oxab4EpxDzvernkiiELL-VEbmmcwn/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzasB9Y5nfXeGD_VgjkpVd2XGCNQ-y_I4Ea7A6PvNrktHfO3ckOuWZksRcnWz7r4z9-/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
@@ -73,24 +73,26 @@ function sendData(base64, filename) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
   
+  // Attach the image data
   data.image = base64;
   data.filename = filename;
 
   fetch(scriptURL, { 
     method: 'POST', 
-    mode: 'no-cors', // <--- This prevents the "Sending..." freeze
+    mode: 'no-cors', // <--- This is the fix for the "Sending..." freeze
     cache: 'no-cache',
     body: JSON.stringify(data) 
   })
   .then(() => {
+    // With no-cors, this runs as soon as the data is sent
     alert("Success! Complaint registered.");
     btn.innerText = "Submit";
     btn.disabled = false;
     form.reset();
-    window.location.reload(); // Returns user to the 'About' page
+    window.location.reload(); 
   })
   .catch(error => {
-    alert("Error! Check your connection.");
+    alert("Error! Check connection.");
     btn.innerText = "Submit";
     btn.disabled = false;
   });
