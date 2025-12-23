@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded",()=>
    a3.classList.remove("active");
 })
 
-const scriptURL='https://script.google.com/macros/s/AKfycbwUmy8nXw8i6Sx5onTqx-Mphbo-nKpXN94ffSi7lFU/dev';
+const scriptURL='https://script.google.com/macros/s/AKfycbyIrGc6NYBekwase2ZhqFYrIjhxV4N-zww1wruDkvZE2olMMyO5rDmSISApQmOlrK5q/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
@@ -97,4 +97,3 @@ function sendData(base64, filename) {
     btn.disabled = false;
   });
 }
-
