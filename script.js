@@ -1,54 +1,98 @@
-// Tab Navigation Logic
-let a1 = document.querySelector("#a1");
-let a2 = document.querySelector("#a2");
-let a3 = document.querySelector("#a3");
-let m1 = document.querySelector("#m1");
-let m2 = document.querySelector("#m2");
-let m3 = document.querySelector("#m3");
-
-function showSection(section, activeLink) {
-    [m1, m2, m3].forEach(m => m.style.display = "none");
-    [a1, a2, a3].forEach(a => a.classList.remove("active"));
-    section.style.display = "flex";
-    activeLink.classList.add("active");
-}
-
-a1.addEventListener("click", () => showSection(m1, a1));
-a2.addEventListener("click", () => showSection(m2, a2));
-a3.addEventListener("click", () => showSection(m3, a3));
-
-document.addEventListener("DOMContentLoaded", () => showSection(m1, a1));
-
-// ... (keep your tab navigation code at the top) ...
-
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxmtCb8_oZ8mQEFG3wuQJ5-0FqEcpjG3uSBledAMyBFckmkK-5EEnyZ-go1WLLk91Rr/exec';
+let a1=document.querySelector("#a1");
+let a2=document.querySelector("#a2");
+let a3=document.querySelector("#a3");
+let m2=document.querySelector("#m2");
+let m1=document.querySelector("#m1");
+let m3=document.querySelector("#m3");
+a1.addEventListener("click",()=>
+{
+   m2.style.display="none";
+   m1.style.display="flex";
+   m3.style.display="none";
+   a1.classList.add("active");
+   a2.classList.remove("active");
+   a3.classList.remove("active");
+   
+})
+a2.addEventListener("click",()=>
+{
+   m1.style.display="none";
+   m2.style.display="flex";
+   m3.style.display="none";
+   a2.classList.add("active");
+   a1.classList.remove("active");
+   a3.classList.remove("active");
+})
+a3.addEventListener("click",()=>
+{
+   m2.style.display="none";
+   m3.style.display="flex";
+   m1.style.display="none";
+   a3.classList.add("active");
+   a2.classList.remove("active");
+   a1.classList.remove("active");
+})
+document.addEventListener("DOMContentLoaded",()=>
+{
+    m3.style.display="none";
+   m2.style.display="none";
+   m1.style.display="flex";
+   a1.classList.add("active");
+   a2.classList.remove("active");
+   a3.classList.remove("active");
+})
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxEJ4dAm9Q6UpiF93LZ-yWSGozsUAeBXo0Um1OTcNMo09ZFxwg9WI884vXUhypmT5ZK/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
-    e.preventDefault();
-    const btn = form.querySelector('button');
-    btn.innerText = "Sending...";
-    btn.disabled = true;
+  e.preventDefault();
+  
+  const btn = form.querySelector('button');
+  btn.innerText = "Sending...";
+  btn.disabled = true;
 
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+  // Get the file from the input
+  const fileInput = document.getElementById('imageFile'); 
+  const file = fileInput.files[0];
 
-    fetch(scriptURL, { 
-        method: 'POST', 
-        mode: 'no-cors', 
-        cache: 'no-cache',
-        body: JSON.stringify(data) // Sending data as a JSON string
-    })
-    .then(() => {
-        alert("Success! Your complaint has been recorded.");
-        btn.innerText = "Submit";
-        btn.disabled = false;
-        form.reset();
-        window.location.reload(); 
-    })
-    .catch(error => {
-        console.error('Error!', error.message);
-        btn.innerText = "Submit";
-        btn.disabled = false;
-    });
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      // Convert image to a long string (Base64)
+      const base64String = reader.result.split(',')[1];
+      sendData(base64String, file.name);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    sendData("", ""); // No image selected
+  }
 });
+
+function sendData(base64, filename) {
+  const btn = form.querySelector('button');
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  
+  data.image = base64;
+  data.filename = filename;
+
+  fetch(scriptURL, { 
+    method: 'POST', 
+    mode: 'no-cors', // <--- ADD THIS LINE TO FIX THE FREEZE
+    cache: 'no-cache',
+    body: JSON.stringify(data) 
+  })
+  .then(() => {
+    // Because of 'no-cors', this will trigger as soon as data is sent
+    alert("Success! Your complaint has been recorded.");
+    btn.innerText = "Submit";
+    btn.disabled = false;
+    form.reset();
+    window.location.reload(); 
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    btn.innerText = "Submit";
+    btn.disabled = false;
+  });
+}
