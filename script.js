@@ -41,61 +41,46 @@ document.addEventListener("DOMContentLoaded",()=>
    a2.classList.remove("active");
    a3.classList.remove("active");
 })
-const scriptURL='https://script.google.com/macros/s/AKfycbwkqVr7pWdEloWfrLQbm3hGDRMMtPxo9lwHW9n8psYYkvAeCNTflR2JNVoSFy8vFZ7I/exec';
+// --- Submission Logic ---
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzMW_s7JmVw5DgJo9pX3NOULa-Bsntl55Y59JPyrEbTK2kgyyQUcEetV45DdyW_dMAS/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
-  e.preventDefault();
-  
-  const btn = form.querySelector('button');
-  btn.innerText = "Sending...";
-  btn.disabled = true;
+    e.preventDefault();
+    
+    const btn = form.querySelector('button');
+    btn.innerText = "Sending...";
+    btn.disabled = true;
 
-  // Get the file from the input
-  const fileInput = document.getElementById('imageFile'); 
-  const file = fileInput.files[0];
+    // 1. Get form data
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function() {
-      // Convert image to a long string (Base64)
-      const base64String = reader.result.split(',')[1];
-      sendData(base64String, file.name);
-    };
-    reader.readAsDataURL(file);
-  } else {
-    sendData("", ""); // No image selected
-  }
+    // 2. Format date as DD/MM/YYYY
+    const now = new Date();
+    const dd = String(now.getDate()).padStart(2, '0');
+    const mm = String(now.getMonth() + 1).padStart(2, '0'); 
+    const yyyy = now.getFullYear();
+    data.date = `${dd}/${mm}/${yyyy}`; 
+
+    // 3. Send to Google Sheets
+    fetch(scriptURL, { 
+        method: 'POST', 
+        mode: 'no-cors', 
+        cache: 'no-cache',
+        body: JSON.stringify(data) 
+    })
+    .then(() => {
+        alert("Success! Your complaint has been recorded.");
+        btn.innerText = "Submit";
+        btn.disabled = false;
+        form.reset();
+        window.location.reload(); 
+    })
+    .catch(error => {
+        console.error('Error!', error.message);
+        btn.innerText = "Submit";
+        btn.disabled = false;
+    });
 });
 
-function sendData(base64, filename) {
-  const btn = form.querySelector('button');
-  const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-
-  // ✅ ONLY DATE (YYYY-MM-DD)
-  const today = new Date();
-  data.date = today.toISOString().split('T')[0];
-
-  data.image = base64;
-  data.filename = filename;
-
-  fetch(scriptURL, { 
-    method: 'POST',
-    mode: 'no-cors',
-    cache: 'no-cache',
-    body: JSON.stringify(data)
-  })
-  .then(() => {
-    alert("Success! Your complaint has been recorded.");
-    btn.innerText = "Submit";
-    btn.disabled = false;
-    form.reset();
-    window.location.reload(); 
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    btn.innerText = "Submit";
-    btn.disabled = false;
-  });
-}
