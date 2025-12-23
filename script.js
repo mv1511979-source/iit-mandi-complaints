@@ -35,8 +35,8 @@ a3.addEventListener("click",()=>
 document.addEventListener("DOMContentLoaded",()=>
 {
     m3.style.display="none";
-   m2.style.display="none";
-   m1.style.display="flex";
+   m1.style.display="none";
+   m2.style.display="flex";
    a1.classList.add("active");
    a2.classList.remove("active");
    a3.classList.remove("active");
@@ -47,18 +47,44 @@ const form = document.querySelector('form');
 form.addEventListener('submit', e => {
   e.preventDefault();
   
-  // Change button text to show it's working
   const btn = form.querySelector('button');
   btn.innerText = "Sending...";
+  btn.disabled = true;
 
-  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-    .then(response => {
-        alert("Success! Your complaint is registered.");
-        btn.innerText = "Submit";
-        form.reset();
-    })
-    .catch(error => {
-        alert("Error! Data not sent.");
-        btn.innerText = "Submit";
-    });
+  // Get the file from the input
+  const fileInput = document.getElementById('imageFile'); 
+  const file = fileInput.files[0];
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function() {
+      // Convert image to a long string (Base64)
+      const base64String = reader.result.split(',')[1];
+      sendData(base64String, file.name);
+    };
+    reader.readAsDataURL(file);
+  } else {
+    sendData("", ""); // No image selected
+  }
 });
+
+function sendData(base64, filename) {
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData.entries());
+  
+  // Attach the actual image data
+  data.image = base64;
+  data.filename = filename;
+
+  fetch(scriptURL, { 
+    method: 'POST', 
+    mode: 'no-cors', 
+    body: JSON.stringify(data) 
+  })
+  .then(() => {
+    alert("Success! Complaint and image registered.");
+    btn.innerText = "Submit";
+    btn.disabled = false;
+    form.reset();
+  });
+}
