@@ -52,7 +52,7 @@ form.addEventListener('submit', e => {
   btn.disabled = true;
 
   // Get the file from the input
-  const fileInput = document.getElementById('imageFile'); 
+  const fileInput = document.getElementById('pic'); 
   const file = fileInput.files[0];
 
   if (file) {
@@ -73,26 +73,25 @@ function sendData(base64, filename) {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData.entries());
   
-  // Attach the image data
   data.image = base64;
   data.filename = filename;
 
   fetch(scriptURL, { 
     method: 'POST', 
-    mode: 'no-cors', // <--- This is the fix for the "Sending..." freeze
+    mode: 'no-cors', // <--- ADD THIS LINE TO FIX THE FREEZE
     cache: 'no-cache',
     body: JSON.stringify(data) 
   })
   .then(() => {
-    // With no-cors, this runs as soon as the data is sent
-    alert("Success! Complaint registered.");
+    // Because of 'no-cors', this will trigger as soon as data is sent
+    alert("Success! Your complaint has been recorded.");
     btn.innerText = "Submit";
     btn.disabled = false;
     form.reset();
     window.location.reload(); 
   })
   .catch(error => {
-    alert("Error! Check connection.");
+    console.error('Error:', error);
     btn.innerText = "Submit";
     btn.disabled = false;
   });
