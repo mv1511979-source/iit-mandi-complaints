@@ -19,26 +19,25 @@ a3.addEventListener("click", () => showSection(m3, a3));
 
 document.addEventListener("DOMContentLoaded", () => showSection(m1, a1));
 
-// Form Submission Logic
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzXyU40y6N5WeH0_3_d6fl5XW5shj2cKzCCKlBDlg27X2n4OfZyHGXjlouiZyq0XQut/exec';
+// ... (keep your tab navigation code at the top) ...
+
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwhT5yAvX5EEpGL3hGZqX9dj3TqqatdZt5f72rUZvamzViJmYAZeRGWeWfBSdGyHQuV/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
     e.preventDefault();
-    
     const btn = form.querySelector('button');
     btn.innerText = "Sending...";
     btn.disabled = true;
 
-    // Send only text data
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
     fetch(scriptURL, { 
         method: 'POST', 
-        mode: 'no-cors', // Critical for stopping the button freeze
+        mode: 'no-cors', 
         cache: 'no-cache',
-        body: JSON.stringify(data) 
+        body: JSON.stringify(data) // Sending data as a JSON string
     })
     .then(() => {
         alert("Success! Your complaint has been recorded.");
@@ -49,7 +48,6 @@ form.addEventListener('submit', e => {
     })
     .catch(error => {
         console.error('Error!', error.message);
-        alert("Error submitting form.");
         btn.innerText = "Submit";
         btn.disabled = false;
     });
