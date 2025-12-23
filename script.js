@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded",()=>
    a3.classList.remove("active");
 })
 
-const scriptURL='https://script.google.com/macros/s/AKfycbyIrGc6NYBekwase2ZhqFYrIjhxV4N-zww1wruDkvZE2olMMyO5rDmSISApQmOlrK5q/exec';
+const scriptURL='https://script.google.com/macros/s/AKfycby2N5Q5t5TwNEDiroUeR7hxeOuhIBJ28lWU3plNv10GgUzfTFv49SCmmpU4mvJPEDf8/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
@@ -70,30 +70,11 @@ form.addEventListener('submit', e => {
 });
 
 function sendData(base64, filename) {
-  const btn = form.querySelector('button');
   const formData = new FormData(form);
-  const data = Object.fromEntries(formData.entries());
-  
-  data.image = base64;
-  data.filename = filename;
+  formData.append("image", base64);
+  formData.append("filename", filename);
 
-  fetch(scriptURL, { 
-    method: 'POST', 
-    mode: 'no-cors', // <--- ADD THIS LINE TO FIX THE FREEZE
-    cache: 'no-cache',
-    body: JSON.stringify(data) 
-  })
-  .then(() => {
-    // Because of 'no-cors', this will trigger as soon as data is sent
-    alert("Success! Your complaint has been recorded.");
-    btn.innerText = "Submit";
-    btn.disabled = false;
-    form.reset();
-    window.location.reload(); 
-  })
-  .catch(error => {
-    console.error('Error:', error);
-    btn.innerText = "Submit";
-    btn.disabled = false;
-  });
+  fetch(scriptURL, { method: "POST", body: formData })
+    .then(() => alert("Success"))
+    .catch(err => console.error(err));
 }
