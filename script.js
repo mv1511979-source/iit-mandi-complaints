@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded",()=>
    a2.classList.remove("active");
    a3.classList.remove("active");
 })
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxEJ4dAm9Q6UpiF93LZ-yWSGozsUAeBXo0Um1OTcNMo09ZFxwg9WI884vXUhypmT5ZK/exec';
+const scriptURL='https://script.google.com/macros/s/AKfycbwkqVr7pWdEloWfrLQbm3hGDRMMtPxo9lwHW9n8psYYkvAeCNTflR2JNVoSFy8vFZ7I/exec';
 const form = document.querySelector('form');
 
 form.addEventListener('submit', e => {
