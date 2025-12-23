@@ -143,7 +143,11 @@ ul {
 li {
     margin-bottom: 8px;
 }
-
+#pic
+{
+    margin-top: 4px;
+    margin-bottom: 20px;
+}
 
 
 #m1, #m2, #m3 {
