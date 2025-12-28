@@ -29,3 +29,18 @@ https://docs.google.com/spreadsheets/d/1kBw7rGw1YCnOP1wY1rWaejh-fq6eeHJwpsBgoJnW
 - Google Sheets  
 - Google Apps Script
 - Google AI
+
+## Impact
+- Provides a simple and accessible digital platform for students to submit hostel and mess complaints
+- Replaces informal and unstructured complaint methods with a centralized system
+- Ensures complaints are recorded digitally and stored securely in Google Sheets
+- Helps hostel and mess authorities view and address issues more efficiently
+- Improves transparency and accountability in campus grievance handling
+
+## Future Scope
+- Add complaint status tracking (Submitted, In Progress, Resolved)
+- Develop an admin dashboard for hostel and mess authorities
+- Implement institute email-based authentication for students
+- Introduce analytics to identify frequently reported issues
+- Integrate AI for automatic issue categorization and prioritization
+- Extend the system to support image uploads and mobile applications
